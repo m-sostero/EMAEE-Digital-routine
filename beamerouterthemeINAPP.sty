@@ -1,0 +1,105 @@
+% LaTeX Beamer theme "INAPP" v. 0.1 - 20th May, 2018
+%
+% Copyright Jacopo Staccioli 2018 (j.staccioli@santannapisa.it)
+%
+% https://www.staccioli.org
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+\mode<presentation>
+
+\defbeamertemplate*{frametitle}{INAPP}[1][]
+{
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}
+    \usebeamerfont{frametitle}%
+    \vbox{}\vskip0.5ex%
+    \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
+    \hspace{1.1em}\strut\insertframetitle\strut\par%
+    %{%
+    %  \ifx\insertframesubtitle\@empty%
+    %  \else%
+    %  {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}%
+    %  \fi
+    %}%
+    %\vskip-2ex%
+    %\noindent\hfill\rule{0.95\paperwidth}{.4pt}\hfill
+    \vskip-1ex%
+    \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+  \end{beamercolorbox}%
+}
+
+\defbeamertemplate*{footline}{INAPP}{
+	\leavevmode%
+	\begin{tikzpicture}
+		\useasboundingbox (0,0) rectangle(\the\paperwidth,0.71);
+		\ifnum\value{page}>1\relax%
+			\node at (0.5\paperwidth,0.3) {\scriptsize
+			\begin{beamercolorbox}[wd=.65\paperwidth,ht=2.25ex,dp=1ex,center]{footlinetext}%
+			\usebeamerfont{section in head/foot}\usebeamercolor[structure]{section in head/foot}\textbf{\insertsection}
+			\end{beamercolorbox}%
+			};  
+			\node at (0.925\paperwidth,0.3) {\scriptsize
+			\begin{beamercolorbox}[wd=.65\paperwidth,ht=2.25ex,dp=1ex,center]{footlinetext}%
+			\usebeamerfont{page number in head/foot}\usebeamercolor[structure]{page number in head/foot}\textbf{\insertframenumber{}}%/\inserttotalframenumber
+			\end{beamercolorbox}%	
+			};
+		\fi
+	\end{tikzpicture}
+	\vskip0pt%
+}
+
+\usebackgroundtemplate%
+{%
+    \includegraphics[width=\paperwidth,height=\paperheight]{frame_background.png}%
+}
+
+\def\lastframe{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+	\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperwidth);
+	\node[at=(current page.center)] {
+	\includegraphics[width=\paperwidth]{lastframe_background.png}
+};
+\end{tikzpicture}
+\begin{tikzpicture}[remember picture,overlay]
+\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperwidth);
+\node at (0.5\textwidth,3.4) {\scriptsize
+	\begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+	\usebeamerfont{page number in head/foot}\usebeamercolor[white]{page number in head/foot}\@lastcredits
+    \end{beamercolorbox}%
+  	};  
+\node at (0.5\textwidth,2.95) {\scriptsize
+	\begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+	\usebeamerfont{page number in head/foot}\usebeamercolor[white]{page number in head/foot}\large{\@lastname\ -- \@lastemail}
+    \end{beamercolorbox}%	
+  	};
+\end{tikzpicture}
+%  \@lastcredits
+%  \@lastname
+  \end{frame}
+}
+% in ``article'' mode there's no ``Thank you'' page
+\mode<article>
+  {\providecommand\makethanks{}}
+
+% commands for the title and message of the "Thank you" page
+\def\lastcredits#1{\def\@lastcredits{#1}}
+\def\lastname#1{\def\@lastname{#1}}
+\def\lastemail#1{\def\@lastemail{#1}}
+
+\mode<all>
